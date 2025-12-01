@@ -16,13 +16,13 @@ void loop(void) {
 
   float reading;
 
-  for(int i = 0; i < 5; i++){
-    double power = pow(10,i);
-    double log1 = log(power);
-    Serial.print("THIS IS THE LOG:");
-    Serial.println(log1);
+ //for(int i = 0; i < 5; i++){
+   // double power = pow(10,i);
+  //  double log1 = log(power);
+  //  Serial.print("THIS IS THE LOG:");
+    //Serial.println(log1);
 
-  }
+  //}
  
   reading = analogRead(THERMISTORPIN);
  
@@ -36,7 +36,22 @@ void loop(void) {
   Serial.println(reading);
   
   //convert the resistance to temperature
-  tempRecip = (1/298.15)+(1/3950)+log(reading/10000);
+  float stepA = 0;
+  //float stepB = 0;
+  float stepC = 0;
+  float stepBC = 0;
+  stepA = (1/298.15);
+  Serial.println("Step A: "+String(stepA,9));
+  float stepB = (float)1/3950;
+  //Serial.println("TEST: "+String(1/1000,16));
+  Serial.println("Step B: "+String(stepB,16));
+  stepBC = reading/10000;
+  Serial.println("Step BC: "+String(stepBC,9));
+  stepC = log(stepBC);
+  Serial.println("Step C: "+String(stepC,9));
+  tempRecip = stepA+stepB*stepC;
+  Serial.print("1/Temperature:");
+  Serial.println(tempRecip);
   tempK = 1/tempRecip;
   Serial.print("Temperature (K):");
   Serial.println(tempK);
