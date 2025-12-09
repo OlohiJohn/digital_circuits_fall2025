@@ -21,6 +21,7 @@ it.start()
 
 # Servo pin: digital 9
 servo = board.get_pin('d:9:s')   # "s" = servo mode
+buzzer = board.get_pin('d:10:o') # "o" = digital output
 
 
 analog_input = board.get_pin('a:0:i')
@@ -59,7 +60,15 @@ while True:
 
    
     if (tempC > 30 or tempC < 10):
-        # open door in gradual angle increments from 0 to 180
+        # --- ring buzzer: 3 short beeps ---
+        for _ in range(3):
+            buzzer.write(1)       # ON
+            time.sleep(0.2)
+            buzzer.write(0)       # OFF
+            time.sleep(0.2)
+        # -----------------------------------
+    
+            # open door in gradual angle increments from 0 to 180
         print("---------Door Opening--------")
         for pos in range(0, 181, 1):
             servo.write(pos)
