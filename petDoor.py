@@ -85,5 +85,6 @@ while True:
             time.sleep(0.015)
             
         # turn off buzzer
-
+         buzzer.write(0)
     time.sleep(10)
+    
